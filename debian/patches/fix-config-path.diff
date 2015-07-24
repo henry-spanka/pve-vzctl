@@ -1,17 +1,4 @@
-Index: new/include/types.h
-===================================================================
---- new.orig/include/types.h	2012-09-28 09:05:45.000000000 +0200
-+++ new/include/types.h	2012-09-28 09:41:31.000000000 +0200
-@@ -21,7 +21,7 @@
- #define VZ_DIR			PKGCONFDIR "/"
- #define GLOBAL_CFG		VZ_DIR "vz.conf"
- #define OSRELEASE_CFG		VZ_DIR "osrelease.conf"
--#define VPS_CONF_DIR		VZ_DIR "conf/"
-+#define VPS_CONF_DIR		"/etc/pve/openvz/"
- #define DIST_DIR		VZ_DIR "dists"
- #define VENAME_DIR		VZ_DIR "names"
- 
-Index: new/paths.am
+ndex: new/paths.am
 ===================================================================
 --- new.orig/paths.am	2012-09-28 09:38:39.000000000 +0200
 +++ new/paths.am	2012-09-28 09:39:27.000000000 +0200
@@ -24,16 +11,3 @@ Index: new/paths.am
  distconfdir = $(pkgconfdir)/dists
  namesdir    = $(pkgconfdir)/names
  
-Index: new/etc/init.d/vz-redhat.in
-===================================================================
---- new.orig/etc/init.d/vz-redhat.in	2012-09-28 09:05:45.000000000 +0200
-+++ new/etc/init.d/vz-redhat.in	2012-09-28 09:39:27.000000000 +0200
-@@ -41,7 +41,7 @@
- . @SCRIPTDIR@/initd-functions
- 
- VZQUOTA=@SBINDIR@/vzquota
--CONFIG_DIR=@PKGCONFDIR@/conf
-+CONFIG_DIR=@VPSCONFDIR@
- LOCKFILE=$VARLOCK/vz_lock
- SUBSYS_VZ=$VARLOCK/vz
- VESTAT=/proc/vz/vestat

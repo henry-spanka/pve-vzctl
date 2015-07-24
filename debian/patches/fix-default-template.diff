@@ -1,14 +1,11 @@
-Index: new/etc/vz.conf
-===================================================================
---- new.orig/etc/vz.conf	2012-09-28 09:05:45.000000000 +0200
-+++ new/etc/vz.conf	2012-09-28 09:38:27.000000000 +0200
-@@ -33,8 +33,7 @@
+--- a/etc/vz.conf.in
++++ b/etc/vz.conf.in
+@@ -36,8 +36,6 @@
  ## Defaults for containers
- VE_ROOT=/vz/root/$VEID
- VE_PRIVATE=/vz/private/$VEID
+ VE_ROOT=@VZDIR@/root/$VEID
+ VE_PRIVATE=@VZDIR@/private/$VEID
 -CONFIGFILE="basic" # Use vswap-256m on RHEL6 kernel
--DEF_OSTEMPLATE="centos-5"
-+
+-DEF_OSTEMPLATE="centos-6-x86"
+ NAMESERVER=inherit # Copy from host system's /etc/resolv.conf
  ## Filesystem layout for new CTs: either simfs (default) or ploop
  #VE_LAYOUT=ploop
- 

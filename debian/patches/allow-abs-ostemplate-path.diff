@@ -1,16 +1,14 @@
-Index: new/src/lib/create.c
-===================================================================
---- new.orig/src/lib/create.c	2012-09-28 09:05:45.000000000 +0200
-+++ new/src/lib/create.c	2012-09-28 09:57:03.000000000 +0200
-@@ -113,19 +113,25 @@
- 	if (ploop && check_ploop_size(dq->diskspace[1]) < 0)
+--- a/src/lib/create.c
++++ b/src/lib/create.c
+@@ -159,19 +159,25 @@
  		return VZ_DISKSPACE_NOT_SET;
+ 	}
  find:
 -	for (i = 0; ext[i] != NULL; i++) {
 -		snprintf(tarball, sizeof(tarball), "%s/cache/%s.tar%s",
 -				fs->tmpl, tmpl->ostmpl, ext[i]);
 -		logger(1, 0, "Looking for %s", tarball);
--		if (stat_file(tarball))
+-		if (stat_file(tarball) == 1)
 -			break;
 -	}
 -	if (ext[i] == NULL) {
@@ -41,7 +39,7 @@ Index: new/src/lib/create.c
  	}
  	/* Lock CT area */
  	if (make_dir(fs->private, 0))
-@@ -236,6 +242,7 @@
+@@ -305,6 +311,7 @@
  	int ret = 0;
  	char src[STR_SIZE];
  	char dst[STR_SIZE];
@@ -49,9 +47,9 @@ Index: new/src/lib/create.c
  	const char *sample_config;
  	fs_param *fs = &vps_p->res.fs;
  	tmpl_param *tmpl = &vps_p->res.tmpl;
-@@ -364,6 +371,12 @@
- 						vps_p->opt.layout,
- 						vps_p->opt.mode)))
+@@ -432,6 +439,12 @@
+ 		ret = fs_create(veid, h, vps_p);
+ 		if (ret)
  			goto err_root;
 +
 +		if ((p = strrchr(tmpl->ostmpl, '/'))) {
