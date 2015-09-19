@@ -1,3 +1,10 @@
+vzctl (4.6-1pve2) unstable; urgency=low
+
+  * Allow NEIGHBOUR_DEVS to specify which interfaces to send ARP on
+    https://bugs.openvz.org/browse/OVZ-4422
+
+ -- Henry Spanka - myVirtualserver <henry@myvirtualserver.de>  Sat, 19 Sep 2015 19:05:29 +0200
+
 vzctl (4.6-1pve1) unstable; urgency=low
 
   * update to vzctl 4.6.1
