@@ -29,7 +29,7 @@ config.status:  configure
 	dh_testdir
 	sed -i "s/'$(VZCTL_VERSION)'/'$(VZCTL_DEBVERSION)'/g" configure
 	./configure \
-	    --without-ploop \
+	    --with-ploop		\
 	    --host=$(DEB_HOST_GNU_TYPE) \
 	    --build=$(DEB_BUILD_GNU_TYPE) \
 	    --prefix=/usr 		\
@@ -63,11 +63,6 @@ install: build
 		install \
 		install-debian \
 		vzdir=/var/lib/vz
-
-	# debianize vz.conf
-	sed -i \
-	    -e 's/\/vz\//\/var\/lib\/vz\//' \
-	    $(CURDIR)/debian/vzctl/etc/vz/vz.conf
 
 	# set default dist-script to debian
 	install -m 644 $(CURDIR)/etc/dists/debian.conf $(CURDIR)/debian/vzctl/etc/vz/dists/default

@@ -1,8 +1,8 @@
-ndex: new/paths.am
-===================================================================
---- new.orig/paths.am	2012-09-28 09:38:39.000000000 +0200
-+++ new/paths.am	2012-09-28 09:39:27.000000000 +0200
-@@ -32,7 +32,7 @@
+diff --git a/paths.am b/paths.am
+index 3684ab1..4b3b14e 100644
+--- a/paths.am
++++ b/paths.am
+@@ -32,7 +32,7 @@ netsdir     = $(sysconfdir)/sysconfig/network-scripts
  ifupdir     = $(sysconfdir)/network/if-up.d
  
  pkgconfdir  = $(sysconfdir)/vz

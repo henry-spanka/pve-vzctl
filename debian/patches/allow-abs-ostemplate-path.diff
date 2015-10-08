@@ -1,6 +1,8 @@
+diff --git a/src/lib/create.c b/src/lib/create.c
+index dd2041d..ffd9b8d 100644
 --- a/src/lib/create.c
 +++ b/src/lib/create.c
-@@ -159,19 +159,25 @@
+@@ -195,21 +195,24 @@ static int fs_create(envid_t veid, vps_handler *h, vps_param *vps_p)
  		return VZ_DISKSPACE_NOT_SET;
  	}
  find:
@@ -10,36 +12,36 @@
 -		logger(1, 0, "Looking for %s", tarball);
 -		if (stat_file(tarball) == 1)
 -			break;
--	}
++       	if (tmpl->ostmpl[0] == '/' && stat_file(tmpl->ostmpl)) {
++               snprintf(tarball, sizeof(tarball), "%s", tmpl->ostmpl);
++       	} else {
++               	for (i = 0; ext[i] != NULL; i++) {
++                      	snprintf(tarball, sizeof(tarball), "%s/cache/%s.tar%s",
++                     		fs->tmpl, tmpl->ostmpl, ext[i]);
++                       	logger(1, 0, "Looking for %s", tarball);
++                       	if (stat_file(tarball))
++                               	break;
++               	}
++               	if (ext[i] == NULL) {
++                       	if (download_template(tmpl->ostmpl) == 0)
++                               	goto find;
++                       	logger(-1, 0, "Cached OS template %s/cache/%s.tar%s not found",
++                              	fs->tmpl, tmpl->ostmpl, errmsg_ext);
++                       	return VZ_OSTEMPLATE_NOT_FOUND;
++               	}
+ 	}
 -	if (ext[i] == NULL) {
 -		if (download_template(tmpl->ostmpl) == 0)
 -			goto find;
 -		logger(-1, 0, "Cached OS template %s/cache/%s.tar%s not found",
 -				fs->tmpl, tmpl->ostmpl, errmsg_ext);
 -		return VZ_OSTEMPLATE_NOT_FOUND;
-+
-+	if (tmpl->ostmpl[0] == '/' && stat_file(tmpl->ostmpl)) {
-+		snprintf(tarball, sizeof(tarball), "%s", tmpl->ostmpl);
-+	} else {
-+
-+		for (i = 0; ext[i] != NULL; i++) {
-+			snprintf(tarball, sizeof(tarball), "%s/cache/%s.tar%s",
-+				 fs->tmpl, tmpl->ostmpl, ext[i]);
-+			logger(1, 0, "Looking for %s", tarball);
-+			if (stat_file(tarball))
-+				break;
-+		}
-+		if (ext[i] == NULL) {
-+			if (download_template(tmpl->ostmpl) == 0)
-+				goto find;
-+			logger(-1, 0, "Cached OS template %s/cache/%s.tar%s not found",
-+			       fs->tmpl, tmpl->ostmpl, errmsg_ext);
-+			return VZ_OSTEMPLATE_NOT_FOUND;
-+		}
- 	}
- 	/* Lock CT area */
- 	if (make_dir(fs->private, 0))
-@@ -305,6 +311,7 @@
+-	}
+-
+ 	/* Check if VE_PRIVATE is not a mount point (#3166) */
+ 	ret = is_mount_point(fs->private);
+ 	if (ret == 1)
+@@ -355,6 +358,7 @@ int vps_create(vps_handler *h, envid_t veid, vps_param *vps_p, vps_param *cmd_p,
  	int ret = 0;
  	char src[STR_SIZE];
  	char dst[STR_SIZE];
@@ -47,16 +49,16 @@
  	const char *sample_config;
  	fs_param *fs = &vps_p->res.fs;
  	tmpl_param *tmpl = &vps_p->res.tmpl;
-@@ -432,6 +439,12 @@
+@@ -493,6 +497,12 @@ int vps_create(vps_handler *h, envid_t veid, vps_param *vps_p, vps_param *cmd_p,
  		ret = fs_create(veid, h, vps_p);
  		if (ret)
- 			goto err_root;
+ 			goto err_cfg;
 +
 +		if ((p = strrchr(tmpl->ostmpl, '/'))) {
-+			p = strdup(p + 1);
-+			free(tmpl->ostmpl);
-+			tmpl->ostmpl = p;
-+		}
++                       	p = strdup(p + 1);
++                       	free(tmpl->ostmpl);
++                       	tmpl->ostmpl = p;
++               	}
  	}
  
  	if ((ret = vps_postcreate(veid, &vps_p->res)))

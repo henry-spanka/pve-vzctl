@@ -1,9 +1,9 @@
 --- a/src/lib/destroy.c
 +++ b/src/lib/destroy.c
-@@ -268,7 +268,7 @@
+@@ -270,7 +270,7 @@ int vps_destroy(vps_handler *h, envid_t veid, fs_param *fs, cpt_param *cpt)
+ 		return VZ_FS_MOUNTED;
  	}
- 	if ((ret = vps_destroy_dir(veid, fs->private)))
- 		return ret;
+ 	ret = vps_destroy_dir(veid, fs->private, fs->layout);
 -	move_config(veid, BACKUP);
 +	move_config(veid, DESTR_ALL);
  	if (destroy_dump(veid, cpt != NULL ? cpt->dumpdir : NULL) < 0)

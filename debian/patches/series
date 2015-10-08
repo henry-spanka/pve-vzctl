@@ -11,4 +11,3 @@ always-create-dev-console.patch
 fix-vzifup-post-error.patch
 pass-bridge-value-as-argument-to-VZNETCFG.patch
 bridge-cleanup.patch
-allow-list-of-neighbour-devs.patch

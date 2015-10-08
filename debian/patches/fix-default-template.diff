@@ -1,11 +1,11 @@
---- a/etc/vz.conf.in
-+++ b/etc/vz.conf.in
-@@ -36,8 +36,6 @@
+--- a/etc/vz.conf.in	2015-09-29 17:36:42.000000000 +0200
++++ b/etc/vz.conf.in	2015-09-29 17:57:31.931866058 +0200
+@@ -41,8 +41,6 @@
  ## Defaults for containers
  VE_ROOT=@VZDIR@/root/$VEID
  VE_PRIVATE=@VZDIR@/private/$VEID
--CONFIGFILE="basic" # Use vswap-256m on RHEL6 kernel
+-CONFIGFILE="vswap-256m"
 -DEF_OSTEMPLATE="centos-6-x86"
  NAMESERVER=inherit # Copy from host system's /etc/resolv.conf
- ## Filesystem layout for new CTs: either simfs (default) or ploop
- #VE_LAYOUT=ploop
+ ## Filesystem layout for new CTs: either simfs or ploop
+ VE_LAYOUT=ploop

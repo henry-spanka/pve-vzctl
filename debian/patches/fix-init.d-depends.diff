@@ -1,3 +1,5 @@
+diff --git a/etc/init.d/vz-redhat.in b/etc/init.d/vz-redhat.in
+index 032ccf8..e0d5230 100755
 --- a/etc/init.d/vz-redhat.in
 +++ b/etc/init.d/vz-redhat.in
 @@ -25,8 +25,8 @@
@@ -19,9 +21,9 @@
  VZQUOTA=@SBINDIR@/vzquota
  CONFIG_DIR=@VPSCONFDIR@
  VZREBOOTDIR=@VZREBOOTDIR@
-@@ -291,6 +292,13 @@
- 	local msg
- 	local need_restart
+@@ -279,6 +280,13 @@ start_ves()
+ 	local header
+ 	local pid pids
  
 +	sysctl -q -w net.ipv4.route.src_check=0
 +
@@ -33,12 +35,12 @@
  	need_restart=""
  	# CTs that were running before a reboot
  	velist=$(ls $VZREBOOTDIR)
-@@ -303,7 +311,7 @@
+@@ -291,7 +299,7 @@ start_ves()
  			awk '$2 == "yes" {print $1}')
  	# Then sort by bootorder
  	test -n "$velist" && velist=$(vzlist -aH -octid -s-bootorder $velist)
 -	sysctl -q -w net.ipv4.route.src_check=0
 +
+ 	get_parallel
  	for veid in $velist; do
  		[ "${veid}" = "0" ] && continue
- 		__echo "Starting CT ${veid}: "
